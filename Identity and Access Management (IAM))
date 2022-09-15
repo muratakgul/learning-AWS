@@ -1,0 +1,28 @@
+
+Identity and Access Management (IAM)
+
+It is a global service, does not require region selection.
+Root account created by default with AWS account creation. 
+Root account should not be used or shared. Use it for just creating an IAM user(s)
+Users are poeple within your organization and can be grouped
+Groups only contain users not other groups
+Users can be member of multiple groups
+We can assign JSON based policies to users and groups to do something on AWS.
+There are hundreds of defined policies, and also we can create new policies using Visual Editor and JSON file.
+We can customize signing URL. It comes with Account ID by default. It is better to change user-friendly name.
+We can set up Password Policy which is highly recommended action.
+We can set up MFA which is highly recommended.
+
+To access AWS, you have three options:
+	AWS Management Console (protected by password and MFA)
+	AWS Command Line Interface CLI (protected by access keys, Access keys for Programmatic Access) 
+	AWS Software Development Kit SDK for code(protected by access keys, Access keys for Programmatic Access)
+Access keys are generated through the AWS Console
+Access Key ID is like username
+Secret Access Key is like password
+Users manage their own access keys, if it is lost we can create the new one through AWS Console
+CloudShell is browser-based shell environment. It is kind of terminal of AWS Cloud. We can open more than one session simultaneously.
+CloudShell can keep created data for a while even if you close the session.
+We assign permissions to AWS services with IAM Roles. For example; EC2 to access S3 buckets.
+Roles can also be assigned to access for another AWS account, web identity for cognito, and SAML 2.0 Federation.
+We can create IAM Credentials Reports (account-level) and IAM Access Advisor (user-level)
