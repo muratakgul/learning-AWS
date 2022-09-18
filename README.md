@@ -6,4 +6,5 @@
 [High Availability & Scalability](https://github.com/muratakgul/learning-AWS/blob/main/High%20Availability%20%26%20Scalability) </br>
 [RDS & Aurora & ElastiCache](https://github.com/muratakgul/learning-AWS/blob/main/RDS%20%26%20Aurora%20%26%20ElastiCache) </br>
 [Route 53](https://github.com/muratakgul/learning-AWS/blob/main/Route%2053) </br>
-[S3 & Athena](https://github.com/muratakgul/learning-AWS/blob/main/S3%20%26%20Athena)
+[S3 & Athena](https://github.com/muratakgul/learning-AWS/blob/main/S3%20%26%20Athena) </br>
+[AWS Storage Extras](https://github.com/muratakgul/learning-AWS/blob/main/AWS%20Storage%20Extras)
