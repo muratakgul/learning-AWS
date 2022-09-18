@@ -4,4 +4,5 @@
 [Elastic Cloud  Compute (EC2)](https://github.com/muratakgul/learning-AWS/blob/main/Elastic%20Compute%20Cloud%20(EC2)) </br>
 [EC2 Storage Options](https://github.com/muratakgul/learning-AWS/blob/main/EC2%20Storage%20Options) </br>
 [High Availability & Scalability](https://github.com/muratakgul/learning-AWS/blob/main/High%20Availability%20%26%20Scalability) </br>
-[RDS & Aurora & ElastiCache](https://github.com/muratakgul/learning-AWS/blob/main/RDS%20%26%20Aurora%20%26%20ElastiCache)
+[RDS & Aurora & ElastiCache](https://github.com/muratakgul/learning-AWS/blob/main/RDS%20%26%20Aurora%20%26%20ElastiCache) </br>
+[Route 53](https://github.com/muratakgul/learning-AWS/blob/main/Route%2053)
