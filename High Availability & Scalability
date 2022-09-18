@@ -1,0 +1,126 @@
+
+Vertical Scaling: Increase instance size
+Horizontal Scaling: Increase the number of instances
+	Auto Scaling Group
+	Load Balancer
+
+High Availability: run instances for the same application accross multi AZ
+	Auto Scaling Group multi AZ
+	Load Balancer multi AZ
+	
+ELB Elastic Load Balancer
+	Load balancers are servers that forward internet traffic to multiple servers (EC2 instances)
+	Seamlessly handle failures of downstream instances
+	Do regular health checks to your instances
+	Expose a single point of access (DNS) to your applications
+	High availability accross zones
+	Separate public traffic from private traffic
+	Managed by AWS, easy to use and cheaper than regular LB solutions
+	You can setup internal (private) or external (public) ELBs
+	LBs can scale but not instantaneously - contact AWS for a "warm-up"
+	Troubleshooting:
+		4xx errors are client induced errors
+		5xx errors are application induced errors
+		Load Balaner Errors 503 means at capacity or no registered target
+		If the LB cannot connect to your application, check your security groups!
+	Monitoring:
+		ELB access logs will log all access requests
+		Cloudwatch Metrics ill give you aggregate statistics (ex: connection count)	
+	
+Types of Load Balancer on AWS
+	Classic	Load Balancer v1 - old generation
+		HTTP, HTTPS, TCP
+		L4 and L7 based traffic can be used
+		Less features
+	Application Load Balancer v2 - new generation
+		HTTP, HTTPS, WebSocket
+		Redirect HTTP to HTTPS
+		Layer 7 based traffic
+		IP addresses must be private IPS
+		ALB are a great fit for micro services & container-based application
+		Targets: EC2 instances, ECS tasks, Lambda functions
+		Fixed hostname (XXX.region.elb.amazonaws.com)
+	Network Load Balancer v2 - new generation
+		TCP, TLS (secure TCP), UDP
+		Layer 4 based traffic
+		Forward TCP & UDP traffic to your instances
+		Handle millions of request per seconds
+		Less latency
+		NLB has one static IP per AZ and supports assigning Elastic IP (helpful for whitelisting specific IP)
+		NLB are usedfor exteme performance, TCP or UDP traffic
+		
+Load Balancer Stickiness
+	Same client is always redirected to the same instance behind a load balancer
+	Can be used for CLB and ALB
+	Use Case: make sure the user does not lose his session data
+	May create a little bit imbalance, be aware of this
+	
+Cross-Zone Load Balancing
+	ALB - Always on (cannot be disabled), no charges for inter AZ data
+	NLB - disabled by default, you pay charges for inter AZ data if enabled
+	CLB - through console, enabled by default, through CLI, disabled by default. No charges...
+	
+ELB-Connection Draining
+	Deregistration Delay
+	(waiting for existing connection to complete)
+	Between 1 to 3600 seconds, by default 300 seconds
+	Can be disabled (set value to 0)
+	Set a low value if your requests are short
+	
+ASG Auto Scaling Group
+	Load on your websites and application can change
+	We can scale out and scale in
+	Ensure we have a minumum and a maxiumum number of machines running
+	Automatically register new instances to a load balancer
+	ASG are free. You pay for underlying resources being launched
+	ASG will automatically create new ones as a replacement in case of one of them fails
+	ASG tries the balance the number of instances across AZ by default
+	
+ASGs have the following attributes:
+		A launch configuration
+		AMI + Instance type
+		EC2 User Data
+		EBS Volumes
+		Security Groups
+		SSH Key Pairs
+	Min size/max size/Initial capacity
+	Network + subnet info
+	Load Balancer Information
+	Scaling policy
+
+Auto Scaling Alarms
+	It is possible to scale an ASG based on CloudWatch alarms
+	An alarm montiors a metric such as average CPU
+	Based on alarm we can create scale-out/in policies (inrease/decrease number of instances)
+	
+Auto Scaling Custom Metrics: (ex: number of connected users)
+	1. send custom metric from application on EC2 to Cloudwatch
+	2. create Coudwatch alarm to react to low/high values
+	3. use the Cloudwatch alarm as the scalinf policy for ASGs
+
+ASG - Scaling Poicies
+	Target Tracking Scaling
+		Most simple and easy to set-up
+		Example: I want the average ASG CPU to stay at around 40%
+	Simple/Step Scaling
+		When a Cloudwatch alarm is triggered (CPU > 70%), then add 2 units
+		When a Cloudwatch alarm is triggered (CPU < 30%), then remove 1 units
+	Scheduled Actions
+		Anticipate a scalinf based on known usage patterns
+		Example: increase the min capacity to 10 at 5pm on Fridays
+		
+ASG - Scaling Cooldown
+	The cooldown period helps to ensure that your Auto Scaling group does not launch or terminate additional instances before the previous scaling activitt takes affect.
+	In addition to default cooldown for ASG, we can create cooldowns that apply to a specific simple scaling policy
+	
+
+ASG - Launch Template vs Launch Configuration
+	Launch Configuration (legacy)
+		must be re-created every time
+	Launch Template (newer)
+		can have multiple versions
+		create parameters subsets
+		provision using both on-demand and spot instances
+		can use T2 unlimited burst feature
+		recommended by AWS going forward
+		
