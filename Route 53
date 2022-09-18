@@ -1,0 +1,83 @@
+
+Route 53 is a managed DNS
+Route 53 has load balancing feature through DNS
+Routing policy feature
+You pay $0.50 per month per hosted zone
+There is $12 dollar one time fee for a hostname
+It is a global service, there is no region selection
+
+In AWS, the most common records are:
+	A: hostname to IPv4
+	AAAA: hostname to IPv4
+	CNAME: hostname to hostname
+	Alias: hostname to AWS resource
+	
+Route 53 can use:
+	pulic domain names you own or buy
+	private domain names that can be resolved by your instances in your VPCs
+	
+DNS Records TTL (Time to Live)
+	TTL is mandatory for each DNS record
+	HighTTL: Less traffic on DNS, possibly outdated records (e.g. 24 hr)
+	LowTTL: More traffic on DNS, records are outdated for less time, easy yo change records (e.g. 60 second)
+	
+	CNAME vs Alias
+		CNAME: Points a hostname to any other hostname: app.mydomain.com --> blabla.anything.com
+		CNAME --> Only for non root domain
+		CNAME: is not free
+		Alias: Points a hostname to an AWS Resource: app.mydomain.com --> blabla.amazonaws.com
+		Alias --> works for root domain and non root domain
+		Alias: free of charge
+		Native health check
+
+Simple Routing Policy
+	Use when you need to redirect to a single resource
+	You cannot attach health checks to simple routing policy
+	If multiple values are returned, a random one is chosen by the client. Simple load balance feature
+
+Weighted Routing Policy
+	Control the % of the requests that go to specific endpoint
+	Helpful to test 1% of traffic on new app version for example
+	Helpful to split traffic between two regions
+	Can be associated with Health Checks
+	60% of the traffic go to first EC2, 30% go to second EC', 10% go to third EC2 for example
+
+Latency Routing Policy
+	Redirect to the server that has the least latency close to us
+	Super helpful when latency of users is a priority
+	Latency is evaluated in terms of user to designated AWS Region
+	Germany may be directed to the US(if that is the lowest latency)
+	
+Failover Routing Policy
+	In order to create failover routing policy, we need to define Health Check first
+	When we create first failover routing policy, we need to associate created health check as primary 
+	When we create second failover routing which will be secondary and no need for health check association
+	If something wrong with the priamry EC2, this policy will direct the request to the secondary
+	
+GeoLocation Routing Policy
+	Different from Latency based
+	This is routing based on user location
+	Traffic from the UK should go to this specific IP 
+	Should create a default policy (We directed two location, then the last one should be default)
+	
+GeoProximity Routing Policy
+	Route traffic to your resources based on the geographic location of users and resources
+	Ability to shift more traffic to resources based on the defines bias
+	To change the size of the geographic region, specify bias values:
+		more traffic to the resource: increase bias number
+		less traffic to the resource: decrease bias number
+	Resources can be AWS or Non-AWS resources
+	You must use Route 53 Traffic Flow (advanced) to use this feature
+	
+Multi Value Routing Policy	
+	Use when routing traffic to multiple resources
+	Want to associate a Route 53 helath checks with records
+	Up to 8 healthy records are returned for each Multi Value query
+
+3rd Party Domains and Route 53
+	Route53 is also domain registrar like GoDaddy and Google Domains
+	Domain Registrar != DNS (but each domain registrar usually comes with some DNS feature)
+	If you buy your domain on 3rd party website, you can still use Route 53
+		create a Hosted Zone in Route 53
+		Update NS Records on 3rd party website to use Route 53 name servers
+    
