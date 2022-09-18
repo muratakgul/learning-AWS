@@ -1,0 +1,109 @@
+
+AWS CloudFront
+Content Delivery Network (CDN)
+	Improves read performance, content is cached at the edge
+	More than 200 Point of Presence globally EDGE LOCATION
+	DDod protection, integration with Shield, AWS Web Application Firewall
+	Encrpyted traffic with HTTPS
+
+CloudFront  Origins
+S3 Bucket
+	For ditributing files anc caching them at the edge
+	Enhanced security with CloudFront Origin Access Identit (OAI)
+	CloudFront can be used as an ingress (to upload files to S3)
+
+Custom Origin (HTTP)
+	Application Load Balancer
+	Ec2 Instance
+	S3 website
+	Any HTTP back-end you want
+	
+CloudFront Geo Restriction
+	You can restrict who can access your distribution
+		Whitelist the countries
+		Blacklist the countries
+	The "country" is determined using 3rd party Geo-IP database
+	Use Case: Copyright Laws to control access to content
+	
+CloudFront vs S3 Cross Region Replication
+	CloudFront
+		Global Edge network
+		Files are cached for a TTL (maybe a day)
+		Great for static content that must be available everywhere
+	S3 Cross Region Replication
+		Must be etup for each region you want replication to happen
+		Files are updated in near real-time
+		Read only
+		Great for dynamic content that needs to be available at low-latency in few regions
+		
+CloudFront Signed URL/Signed Cookies
+	You want to distribute paid shared content to premium users over the world
+	How lon should the URL be valid for?
+		Shared content (movie or music):make it short (a few minutes)
+		Private content (private to the user): you can make it last for years
+		
+	Signed URL: access to individual files
+	Signed Cookies: access to multiple files
+	
+CloudFront Signed URL vs S3 Pre-Signed URL
+	CloudFront Signed URL
+		Allow access to path, no matter the origin
+		Account wide key-pair, only the root can manage it
+		Can filter by IP, path, date, expiration
+		Can leverage caching feature
+	S3 Pre-Signed URL
+		Issue a request as the person who pre-signed the URL
+		Uses the IAM key of the signing IAM principal
+		Limited lifetime
+		
+CloudFront - Pricing
+	CloudFront Edge locations are allaround the world
+	The cost of data out per edge locaiton varies (In India twice higher than the US)
+	You can reduce the number of edge locations for cost reduction
+		Three Price classes:
+			Price Class All (most expensive) best performance
+			Price Class 200
+			Price Clas 100 (less expensive)
+	
+CloudFront - Origin Groups
+		To increase high-availability and do failover
+		One primary and one secondary origin
+		If the primary origin fails the second one is used
+		
+CloudFront - Field Level Encryption
+	Protect user sensitive information through application stack
+	Adds an additional layer of security along with HTTPS
+	Sensitive information encrpyted at the edge cloase to user
+	Uses asymmetric encryption
+	
+AWS Global Accelerator
+	You have deployed an application and have global users who want to access it directly
+	They go over the public internet which can add a lot of latency due to many hops
+	We wish to go as fast as possible through AWS network to minimize latency
+	Works with Elastic IP, EC2 Instances, ALB, NLB, public or private
+	Provides consistent performance
+	Do health check for the applications
+	Provides security: only 2 external IP need to be whitelisted and DDoS protection thanks to AWS Shield
+	Global Accelerator uses Anycast IP concept to work
+	Send request to the closest edge location and send to the origin location with internal AWS network
+		2 Anycast IP are created for your application
+		The Anycas IP send traffic directly to Edge Location
+		The Edge locations send the traffic to your application
+		
+AWS Global Accelerator vs CloudFront
+	Both use the AWS global network and its edge locations around the world
+	Both services integrate with AWS Shield for DDoS protection
+	
+	CloudFront
+		Improves performance for both cacheable content (such as images and videos
+		Dynamic content (such as API acceleration and dynamic site delivery)
+		Content is served at the edge
+	Global Accelerator
+		Improves performance for a wide range of applications over TCP or UDP
+		Proxying packets at the edge to applications running in one or more AWS Regions
+		Good fit for non-HTTP use cases, such as gaming(UDP), IoT, or Voice over IP
+		Good for HTTP use cases that require static IP addresses
+		Good for HTTP use cases that required deterministic, fast regional failover
+		It is newer technology than CloudFront
+    
+		
