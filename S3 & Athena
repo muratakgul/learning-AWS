@@ -1,0 +1,138 @@
+
+Amazon S3 - Overview
+	Amazon S3 is one of the main building block of AWS
+	Many websites use Amazon S3 as a backbone
+	It is advertised as "infinitely scaling" storage
+	Many AWS services uses Amazon S3 as an integration as well
+	Amazon S3 allows people to store objects (files) in "BUCKET" (directories)
+	Buckets must have a globally unique name
+	Buckets are defined at region level
+	In general, bucket owners pay for all Amazon S3 storage and data transfer costs associated with their bucker
+	In some cases, if requester is authenticated in AWS we can set as requester pays for transferring. (cannot be anonymous)
+	Obejcts (files) have a key
+	the key is the full path: s3://my-bucket/my_file.txt
+	Maximum object size is 5TB
+	If you uploading more than 5GB, must use "multi-part upload"
+	Naming convention
+		No uppercase
+		no underscore
+		3-63 characters long
+		Not an IP
+		Must start with lowercase letter or number
+
+Amazon S3 - Versioning
+	It is enabled at the bucket level
+	Suspending versioning does not delete the previous versions
+	Protect against unintended deletes (ability to restore a version)
+	Easy roll back to previous version
+	
+S3 Encryption for Objects
+	There are 4 methods of encrpyting objects in S3
+		SSE-S3: encrypts S3 obejcts usinf keys handled & managed by AWS
+			Object is encrpyted server side
+			AES-256 encryption type
+		SSE-KMS: leverage AWS KMS to manage encryption keys
+			Object is encrpyted server side
+			KMS Advantages: user control + audit trail
+		SSE-C: when you want to manage your own encryption keys
+			HTTPS must be used
+			Amazon S3 does not store the encryption key you provide
+			Encryption key must provided in HTTP header for every HTTP request mad
+		Client Side Encryption
+			Client must encrypt data themselves before sending to S3
+			Client must decrypt data themselves when retrieving from S3
+			Customer fully manages the keys and encryption cycle
+			
+	Encryption in flight is also called SSL/TLS
+
+S3 Security
+	User based
+		IAM policies
+	Resource Based
+		Bucket policies
+		Object ACL
+		Bucket ACL
+
+S3 Bucket Policies
+	JSON based policies
+	
+S3 Websites
+	S3 can host static websites and have them accessible on the www
+	The website URL will be	
+		<bucket-name>.S3-website-<AWS-region>.amazonaws.com or 
+		<bucket-name>.S3-website.<AWS-region>.amazonaws.com
+	If you get a 403 (Forbidden) error, make sure the bucket policy allows public reads!
+	
+S3 CORS - Cross-Origin Resource Sharing
+	Web browser based mechanisgm to allow requests to other origins while visiting the main origin
+	If a client does a cross-origin request on our S3 bucket, we need to enable the correct CORS headers
+	
+S3 MFA-Delete
+	To use MFA-Delete, enable Versioning on the S3 bucket
+	Only the bucket owner (root account) can enable/disable MFA-Delete
+	Can only be enabled using CLI at the moment!
+	You will need MFA to:
+		permenantly delete an object version
+		suspend versioning on the bucket
+	You will not need MFA for:
+		enabling versioninglisting deleted versions
+		
+S3 Access Logs
+	Log files will be located in another S3 bucket
+	If you set logging bucket in normal used bucket, it may create logging loop and cause huge bill. Bucket will grow in size exponentially!
+	
+S3 Replication (CRR & SRR)
+	Must enable versioning in source and destination
+	Cross Region Replication (CRR)
+	Same Region Replication (SRR)
+	Buckets can be in differenr accounts
+	Compying is asynchronous
+	Must give proper IAM permission to S3
+	After activating, only new objects are replicated
+	Optionally, you can replicate existing objects using S3 Batch Replication
+	
+S3 Storage Classes
+	Amazon S3 Standard-General Purpose: Frequently accessed data
+		Use Cases: Big data analytics, mobile&gaming apps, content distribution
+	Amazon S3 Standard-Infrequent Access (IA): lessfrequently accessed
+		Use Cases: Disaster recovery, backups
+	Amazon S3 One Zone-Infrequent Access: less availability in a single AZ
+		Use Cases: Storing secondary backup copies of on-premise data
+	Amazon S3 Glacier Instant Retrieval: Min 90 days. milisecond retrieval, great for data accessed once a quarter
+	Amazon S3 Glacier Flexible Retrieval: Min 90 days. Expedited (1 to 5 min), Standard (3 to 5 hours), Bulk (5 to 12 hours) - free
+	Amazon S3 Glacier Deep Archive: Min 180 days. for long term storage. Standard (12 hours), Bulk (48 hours)
+	Intelligent Tiering: 
+		Small monthly monitoring and auto-tiering fee
+		Moves objects automatically between Access Tiers based on usage
+		There are no retrieval charges in S3 Intelligent-Tiering
+	
+	Can move between classes manuelly or using S3 Lifecycle configurations
+	S3 standard has 99.99% availability = not available 53 minutes a year
+	
+S3 Analytics - Storage Class Analysis
+	You can setup to transition objects from Standard to Standard-IA
+	Does not work for ONEZONE_IA and Glacier
+	Report is updated daily
+	Good first step to put together Lifecycle Rules
+	
+
+Amazon Athena
+	Serverless query service to perform analytics against S3 objects 
+	Uses standard SQL language to query the files
+	Supports CSV, JSON, ORC, Avro, and Parquet (built on Presto)
+	Pricing: $5 per TB of data scanned
+	Use cases: BI, anlaytcis, reporting, analyze & query, VPC Flow Logs, ELB Logs, CloudTrails etc...
+	Exam Tip: analyze data in S3 using serverless SQL, use Athena
+
+Glacier Vault Lock
+	Lock the policy for future edits
+	Helpful for compliance and data retention
+	Object cannot be deleted and changed in vault
+	
+S3 Object Lock
+	Higher level restriction for our objects
+	Block an object version deletion for a specified amount of time
+	Versioining must be enabled
+	Governance mode and compliance mode exist: even root user cannot do anything on the objects
+  
+ 
