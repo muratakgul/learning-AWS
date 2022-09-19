@@ -1,0 +1,107 @@
+
+CloudWatch CloudTrail Config
+
+AWS CloudWatch
+	Cloudwatch provides metrics for every services in AWS
+	Metric is a variable to monitor
+	Metrics belong to namespaces
+	Up to 10 dimensions per metrics 
+	Metrics have timestamps
+	Can create CloudWatch dashboards of metrics
+	EC2 instance metrics have metrics "every 5 minutes"
+	With detailed monitoring for a cost "very 1 minute"
+	The AWS Free Tier allows us to have 10 detailed monitoring metrics
+	Note: EC2 Memory usage is by default not pushed, can push by custom metrics
+	
+	By default, no logs from your EC2 machine will go to CloudWatch
+	You need to run a CloudWatch agent on EC' to push the log files you want
+	Make sure IAM permissions are correct
+	The CloudWatch log agent can be setup on-premises too
+	
+CloudWatch Dashboards
+	Great way to setup dashboards for quick access to keys metrics
+	Dashboards are global
+	Dashboards can include graphs from different regions
+	You can change the time zone & time range of the dashbaords
+	You can setup automatic refresh (10s, 1m, 2m, 5m, 15m)
+	3 dashboards (ıp to 50 metrics) for free
+	$3 dashboard/month afterwards
+	
+CloudWatch Logs
+	Applications can send logs to CloudWatch using the SDK
+	Can define log expiration policies
+	Using the AWS CLI we can tail CloudWatch logs
+	To send logs to CloudWatch, make sure IAM permissions are correct!
+	Encrpytion of logs use KMS
+
+CloudWatch Alarms
+	Alarms are used to trigger notifications for any metric
+	Alarms can go to Auto Scaling, EC2 Actions, SNS notifications
+	Alarm States: OK, INSUFFICIENT_DATA, Alarm
+	
+CloudWatch Events
+	Schedule: Cron jobs
+	Triggers to Lamda functions, SQS/SNS/Kinesis Messages
+	CloudWatch Event create a small JSON document to give information about the change
+	
+	
+AWS CloudTrail	
+	Provides governance, compliance and audit for your AWS account
+	CloudTrail is enabled by default!
+	Get an history of events/APIcalls made within your AWS Account by Console, SDK, CLI, AWS Services
+	Can put logs from CloudTrail into CloudWatch Logs ot S3
+	A trail can be applied to All Regions (default)or a single Region
+	If resource is deleted in AWS, investigate CloudTrail first!
+	Enable CloudTrail Insights to detect unusual activity in your account
+	CloudTrail Insights analyzes normal management events to create a baseline
+	And then continously analyzes write events to detect unusual patterns and event is sent to S3
+	Events are stored for 90 days in CloudTrail
+	To keep events beyond this period, log them to S3 and use Athena
+	
+	
+AWS Config
+	Helps with auditing and recording compliance of your AWS resources
+	Helps record configurations and changes over time
+	Possibility of storing the configuraion data into S3 (analyzed by Athena)
+	Questions that can be solved by AWS Config:
+		Is there unrestricted SSH access to my security groups?
+		Do my buckets have any public access?
+		How has my ALB configuration changed over time?
+	You can receive alerts (SNS notifications) for any changes
+	AWS Config is a per-region services
+	Can be aggregated accross regions and accounts
+	
+AWS Config Rules
+	Can use AWS managed config rules (over 75)
+	Can make custom config rules
+	Rules can be evaluated/triggered
+	AWS Config Rules does not prevent actions from happening (no deny)
+	Pricing: No free tier, $2 per active rule per region per month
+	
+
+SUMMARY
+CloudWatch
+	Performance monitoring (metrics, CPU, network, etc...) and dashboard
+	Events & Alerting
+	Log aggregation & Analysis
+CloudTrail
+	Record API calls made within your Account by everyone
+	Can define trails for specific resources
+	Global service
+Config	
+	Record configuration changes
+	Evaluate resource against compliance rules
+	Get timeline of changes and compliance
+
+For an Elastic Load Balancer Example:
+	CloudWatch:
+		Monitoring incomin connections metric
+		Visualize error codes as a % over time
+		Make a dashboard toget an idea of your load balancer performance
+	Config:
+		Track security group rules for the Load Balancer
+		Track configuration changes for the Load Balancer
+		Ensure SSL certificate is always assigned to the LB (compliance)
+	CloudTrail:
+		Track who made any changes to the Load Balancer with API calls
+    
