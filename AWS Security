@@ -1,0 +1,112 @@
+
+Encrytion 101
+	Encryption in flight (SSL)
+	Server side encryption at rest
+	Client Side encryption
+	
+AWS KMS (Key Management Service)
+	Anytime you hear "encryption" for an AWS service, it is most likelt KMS
+	AWS manages keys for us
+	Fully integrated with IAM for authorization
+	
+	KMS - Customer Master Key (CMK) Types
+		Symmetric (AES-256 keys)
+		Asymmetric (RSA & ECC key pairs)
+	User Keys created in KMS: $1 /month and also pay for API call to KMS ($0.03 / 10000 calls)
+	Anytime you need to share sensitive information... use KMS
+		DB passwords
+		Credentials to external service
+		Private key of SSL sertificates
+	Never ever store your secrets in plaintext, especially in your code!
+	Encrypted secrets can be stored in the code / environment variables
+	KMS can only help in encrypting up to 4KB of data per call
+	If DATA > 4KB, use envelope encryption
+	
+SSM Parameter Store
+	Secure storage for configuration and secrets
+	Optional seemless encryption using KMS
+	Serverless, scalable, durable, easy SDK
+	Version tracking of configurations / secrets
+	Notification with CloudWatch Events
+	Integration with CloudFormation
+	
+AWS Secrets Manager
+	Newer service, meant for storing secrets
+	Capability to force rotation of secrets every X days
+	Automate generation of secrets on rotation (uses Lambda)
+	Integration with Amazon RDS (MySQL, PostgreSQL, Aurora)
+	Secrets are encrypted using KMS
+	
+CloudHSM
+	HSM --> Hardware Security Module
+	KMS is used to manage the software for encryption
+	You manage your own encryption keys entirely (not AWS)
+	HSM device is tamper resistant, FIPS 140-2 level 3 compliance
+	CloudHSM clusters are spread accross multi AZ (HA) - must setup
+	Supports both symmetric and asymmetric encryption
+	No free tier available
+	Must use the CloudHSM Client Software
+	Redshift supports CloudHSM for database encryption and key management
+	Good option to use with SSE-CMK
+	
+AWS Shield (DDoS Protection)
+	AWS Shield Standard
+		Free servicethat is activated for every AWS customer
+		Provides protection from attacks suc as SYN/UDP Floods, Reflection attacks, and other L3/L4 attacks
+	AWS Shield Advanced
+		Optional DDoSmitigation service ($3000 per month per organization)
+		Protect against more sophisticated attack on EC2, ELB, CloudFront, Global Accelerator, and Route 53
+		24/7 access to AWS DDoS response team (DRP)
+		
+AWS WAF (Web Application Firewall)
+	Protects your web applicaitons from common web exploits (L7)
+	Deploy on ALB, API Gateway, CloudFront
+	Define Web ACL
+		Rules can include: IP addresses, HTTP headers, HTTP body, or URI strings
+		Protects from common attacks - SQL Injection and Cross-Site Scripting (XSS)
+		Size constraint, geo-match (block countries)
+		Rate-based rules (to count occurrences of evetns) - for DDoS protection
+		
+Amazon GuardDuty
+	Intelligent Threat discovery to Protect AWS Account
+	Uses ML algorithms, anomaly detection, 3rd party data
+	One click to enable(30 days trial), no need to install software
+	Input data includes:
+		CloudTrail logs
+		VPC Flow logs, DNS logs
+	Can setup CloudWatch Event Rules to be notified in case of findings
+	CaloudWatch Event rules can target AWS Lambda or SNS
+	Can protect against CryptoCurrency attacks (has a dedicated "finding" for it)
+	
+Amazon Inspector
+	Automated Security Assessments for EC2 instances
+	Analyze the running OS against known vulnerabilities
+	Analyze agains unintended network accessibility
+	AWS Inspector Agent must be installed on OS in EC2 instances
+	After the assessment, you get a report with a list of vulnerabilities
+	Possibility to end notifications to SNS
+	
+
+Amazon Mecie
+	It is a fully managed data security and data privacy service that uses ML and pattern matching to discover and protect your sensitive data in AWS
+	Macie helps identify and alert you to sensitive data, such as personally identifiable information (PII)
+	For example analyze S3 bucket, if it finds something PII, can notify CloudWatch Events to do something if we want
+	
+AWS Shared Responsibility Model
+	AWS Responsibility - Security of the Cloud
+		Protecting infrastructure (hardware, software, facilities, and networking) that runs all of the AWS services
+		Managed services like S3, DynamoDB, RDS etc...
+	Customer Responsbility - Security in the Cloud
+		For EC2 instance, customer responsible for management of the quest OS (including security patches and updates), firewall & network configuration, IAM etc...
+	Example for S3:
+		AWS responsibility:
+			Guarantee you get unlimited storage
+			Guarantee you get encryption
+			Ensure separation of the data between different customers
+			Ensure AWS employee's cannot access your data
+		Your responsibility:
+			Bucket configuration
+			Bucket policy/public setting
+			IAM user and roles
+			Enabling encryption
+      
