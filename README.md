@@ -14,4 +14,5 @@
 [Serverless Overview](https://github.com/muratakgul/learning-AWS/blob/main/Serverless%20Overview) </br>
 [Databases in AWS](https://github.com/muratakgul/learning-AWS/blob/main/Databases%20in%20AWS) </br>
 [Monitoring and Audit Services](https://github.com/muratakgul/learning-AWS/blob/main/Monitoring%20and%20Audit%20Services) </br>
-[IAM Advanced](https://github.com/muratakgul/learning-AWS/blob/main/IAM%20Advanced)
+[IAM Advanced](https://github.com/muratakgul/learning-AWS/blob/main/IAM%20Advanced) </br>
+[AWS Security](https://github.com/muratakgul/learning-AWS/blob/main/AWS%20Security)
