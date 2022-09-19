@@ -1,0 +1,63 @@
+
+Simple Notification Service (SNS)
+	Most commonly used and one of the oldest service
+	There are three components of SNS
+		Publisher - might be people, might be another service such as CloudWatch
+		Topic - To publish the message
+		Subscriber - might be couple people or thousands of people.
+	The types of endpoint to subscribe:
+		HTTP or HTTPS
+		Email or Email-JSON
+		Amazon SQS
+		AWS Lambda
+		Platform application endpoint
+		SMS
+		
+Simple Queue Service (SQS)
+	It is generaly used for microservices and any applications especially including database
+	One applicaiton may create a data in the queue and the other one gets
+	Once data retrieved by another application, the data will be deleted in the queue
+	Two types: Standard and FIFO (First In First Out) -- FIFO ensures that data retrieved by the others once
+	
+Simple Workflow Service (SWF)
+	This is a service for developers
+	It helps to create a workflow based on application
+	Three components:
+		Workflow Starter (might be a website accepts customer information)
+		Workflow Decider
+		Workflow Worker
+		
+Simple Email Service (SES)
+	Allows sending email with our application
+	Promotion and campaign emails
+	First 62000 emails are free on EC2 but after this point every 1000 email cost is 0.10$
+	
+Kinesis:
+	Amazon Kinesis makes it easy to collect, process, and analyze real-time, streaming data so you can get timely insights and react quickly to new informatio
+	With Amazon Kinesis, you can ingest real-time data such as video, audio, application logs, website clickstreams, and IoT telemetry data for machine learning, analytics, and other applications.
+	For example helps Fraud detection such as stolen credit cards is used in any other country or different habits of usage
+	Kinenis has 3 components:
+		Producers
+		Shard
+		Consumers
+		
+Amazon MQ: 
+	Amazon MQ is a managed message broker service for Apache ActiveMQ and RabbitMQ that makes it easy to set up and operate message brokers on AWS.
+	Amazon MQ reduces your operational responsibilities by managing the provisioning, setup, and maintenance of message brokers for you.
+	Because Amazon MQ connects to your current applications with industry-standard APIs and protocols, you can easily migrate to AWS without having to rewrite code.
+	
+	
+SQS - consumer pull data
+SQS - data is deleted after being consumed
+SQS - ordering guarantees only on FIF queues
+
+Kinesis - standard pull data 2 MB per shard, and push data
+Kinesis - possibility to replay data
+Kinesis - meant for real-time big data, analytics and ETL
+Kinesis - data expires after X days
+	
+SNS - Push data to many subscriber
+SNS - up to 12,500,000 subscribers
+SNS - Data is not persistent
+SNS - up to 10000 topics
+SNS - Integrates with SQS
