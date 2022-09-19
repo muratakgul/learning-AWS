@@ -1,0 +1,61 @@
+
+AWS Security Token Service (STS)
+	Allows to grant limited and temporary access to AWS resources
+	Token is valied for up to one hour (must be refreshed)
+	Used for the same AWS account or cross-account too
+	Types:
+		AssumeRole
+		AsuemRoleWithSAML
+		AssumeRoleWithWebIdentity
+		GetSessionToken
+
+Identity Federation in AWS
+	Federation lets users outside of AWS to ssume temporary role for accessinf AWS resources
+	Federations can have many floavors:
+		SAML 2.0 (to integrate AD/ADFS)
+		Custom IDentity Broker
+		Web IDentity Federaiton with Amazon Cognito
+		Web IDentity Federaiton without Amazon Cognito
+		Single Sign On
+		Non-SAML with AWS Microsoft AD
+	Using federation, you do not need to create IAM users (user management is outside of AWS)
+
+AWS Directory Services
+	AWS Managed Microsoft AD
+		Create your own AD in AWS, manage users locally, spports MFA
+		Establish "trust" connections with your on-premise AD
+	AD Connector
+		Directory Gateway (proxy) to redirect to on-premise AD
+		Users are managed on the on-premise AD
+	Simple AD
+		AD-compatible managed directory on AWS
+		Cannot be joined with on-premise AD
+
+AWS Organizations
+	Global service
+	Allows to manage multiple AWS accounts
+	The main account is the master account - you cannot change it
+	Other accounts are member accounts
+	Member accountscan only be part of one organization
+	Consolidated Billing accross all accounts - single payment method
+	Pricing benefits from aggregated usage
+	Used  differentFor departments, regulatory restrictions, isolated accounts for logging
+	Use tagging standards for billing purposes, enable CloudTrail, define CloudWatch
+	Establish Cross Account Roles for Admin purposes
+	Service Control Policies (SCP) can be created for restricting access for services
+	
+AWS Resource Access Manager (RAM)
+	Share AWS resources that you own with other AWS accounts
+	Share with any account or within your Organizations
+	Avoid resource duplication!
+	We can share VPC subnets in AWS Organizations
+		Cannot share security groups and default VPC
+	
+AWS Single Sign-On (SSO)
+	Centrally manage SSO to acess multiple accounts and 3rd party business applications
+	Integrated with AWS Organizations
+	Supports SAML 2.0 markup
+	Integration with on-premise AD
+	Centralized permission management and auditing with CloudTrail
+  
+  
