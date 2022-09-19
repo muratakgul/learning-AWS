@@ -1,0 +1,96 @@
+
+Serverless is a new paradigm in which the developers do not have to manage servers anymore
+They just deploy code and functions!
+Initially... Serverless == Function as a Service (FaaS) 
+Serverless was pioneered by AWS Lambda but now "db, messaging, storage" etc...
+Serverless does not mean there are no servers, it means you just do not manage/provision/see them
+
+Serverless in AWS
+	AWS Lambda
+	DynamoDB
+	AWS Cognito
+	AWS API Gateway
+	Amazon S3
+	AWS SNS&SQS
+	AWS Kinesis Data Firehose
+	Aurora Serverless
+	Step Functions
+	Fargate
+	
+AWS Lambda Overview
+	Virtual functions - no servers to manage!
+	Run on-demand
+	Limited by time - short eecutions
+	Scaling is automated
+	
+	Benefits of AWS Lambda
+		Easy pricing and it is usually very cheap to run AWS Lambda so it is very popular
+		Integrated with the whole AWS suite of services
+		Integrated with many programming languages
+		Easy montioring through AWS CloudWatch
+		Easy to get more resources per functions (up to 3GB of RAM)
+		Increasing RAM will also improve CPU and network!
+		
+AWS Lambda Limits
+	Execution:
+		Memory allocation 128MB - 10GB (1 MB increments)
+		Maxiumum execution time: 900 seconds (15 minutes)
+		Environment variables (4 KB)
+		Disk capacity in the "function container"(in /tmp): 512MB
+		Concurrency executions: 1000 (can be increased)
+	Deployment:
+		Lambda function deployment size (compressed .zip): 50 MB
+		Size of uncompressed depoloyment (code + dpendencies): 250 MB
+		Can use the /tmp directory to load other files at startup
+		Size of environment variables: 4 KB
+
+AWS DynamoDB
+	Fully managed, highly available with replication accross multiple AZs
+	NoSQL database - not a relational database
+	Scales to massive workloads, distributed database
+	Millons of requests per second, trillions of row, 100s of TB of storage
+	Fast and consistent in performance (low latency on retrieval)
+	Integrated with IAM for security, authorization and administration
+	Enables event driven programming with DynamoDB Streams
+	Low cost and auto-scaling capabilities
+	Standard and IA Table class
+	
+	DynamoDB is made of Tables
+	Each table has a Primary Key (must be decided atcreation time)
+	Each table can have an infinite number of items (rows)
+	Each item has attributes - can be null
+	Maximum size of an item is 400KB
+	DynamoDB Read/Write Capacity Modes
+		Provisioned Mode (default)
+		On-Demand Mode
+
+AWS API Gateway
+	AWS Lambda + API Gateway: No infrastructure to manage
+	Support for the WebSocket Protocol
+	Handle API versioning (v1, v2,...)
+	Handle different environment (dev,test,prod...)
+	Handle security (Authentication and Authorization)
+	Transform and validate requests and responses
+	Generate SDK and API specifications
+	Cache API responses
+	API Gateway - Endpoint Types:
+		Edge-Optimized (default)
+		Regional
+		Private
+
+AWS Cognito
+	We want to give our users an identity so that they can interact with our application
+	Amazon Cognito lets you add user sign-up, sign-in, and access control to your web and mobile apps quickly and easily.
+	Amazon Cognito scales to millions of users and supports sign-in with social identity providers, such as Apple, Facebook, Google, and 
+    Amazon, and enterprise identity providers via SAML 2.0 and OpenID Connect.  
+	
+
+AWS Serverless Application Model (SAM)
+	Framework for developing and deploying serverless applications
+	All the configuraiton is YAML code
+		Lambda Functions
+		DynamoDB tables
+		API Gateway
+		Cognito User Pools
+	SAM can help you to run Lambda, API Gateway, DynamoDB locally
+	SAM can use CodeDeploy to deploy Lambda functions
