@@ -16,4 +16,4 @@
 [Monitoring and Audit Services](https://github.com/muratakgul/learning-AWS/blob/main/Monitoring%20and%20Audit%20Services) </br>
 [IAM Advanced](https://github.com/muratakgul/learning-AWS/blob/main/IAM%20Advanced) </br>
 [AWS Security](https://github.com/muratakgul/learning-AWS/blob/main/AWS%20Security) </br>
-[Networkin VPC](https://github.com/muratakgul/learning-AWS/blob/main/Networking%20VPC)
+[Networking VPC](https://github.com/muratakgul/learning-AWS/blob/main/Networking%20VPC)
