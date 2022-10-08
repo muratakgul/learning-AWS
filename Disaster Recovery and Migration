@@ -1,0 +1,99 @@
+
+Disaster Recovery in AWS
+	DR is about preparing for and recovering from a disaster
+	On-premise --> on-premise: traditional DR and very expensive
+	on-premiase --> AWS Cloud: hybrid recovery
+	AWS Cloud Region A --> AWS Cloud Region B
+	Need to define two terms:
+		RPO: Recovery Point Objective - How often you backup until disaster - data loss
+		RTO: Recovery Time Objective - When you recover from disaster - downtime
+	
+Disaster Recovery Strategies
+	Hot Site/Multi Site Approach --> (Low RTO) - Full production scale is running AWS and On-Premise - very expensive
+	Warm Standby --> full system is up and running, but minimum size - upon disaster, we can scale to production load
+	Pilot Light --> a small version of the app is always running in the cloud, critical ones, very similar to Backup and Restore but faster
+	Backup and Restore (High RPO) --> Cheap solution - Use AWS Storage Gateway and AWSSnowball
+
+Disaster Recovery Tips
+	Backup	
+		EBS snapshots, RDS automated backup/Snapshots, etc...
+		Regular pushes to S3/S3 IA/Glacier, Lifecycle Policy, Cross Region Replication
+		From On-Premise: Snowball or Storage Gateway
+	High Availability
+		Use Route53 to migrate DNS over from Region to Region
+		RDS Multi-AZ, ElastiCache Multi-AZ, EFS, S3
+		Site to Site VPN as a recovery from Direct Connect
+	Replication	
+		RDS REplication (Cross Region), AWS Aurora + Global Databases
+		Database replication from on-premise to RDS
+		Storage Gateway
+	Automation
+		CloudFormation/Elastic Beanstalk to re-create a whole new envrinment
+		Recover / Reboot EC2 instances with CloudWatch if alarm fail
+		AWS Lambda functions for customized automations
+	Chaos
+		Netflix has a "simian-army" randomly terminating EC2
+	
+Database Migration Service (DMS)
+	Quickly and securely migrate databases to AWS , resilient, self healing
+	The source database remians available during migration
+	Supports homogeneous and heterogeneous migrations such as Oracle to Oracle, MS SQL to Aurora
+	Continous Data Replication using CDC
+	You must create an EC2 instance to perform the replication tasks
+	
+On-Premise Strategy with AWS
+	Ability to download Amazon Linux 2 AMI asa VM (.iso format)
+		Vmware, KVM, VirtualBox (Oracle VM), MS Hyper-VM
+	VM Import/Export
+		Migrate existing applications into EC2
+		Create aDR repository strategy for your on-premise VMs
+		Can export back the VMs from EC2 to on-premise
+	AWS Application Discovery Service
+		Gather info about your on-premiase servers to plan a migration
+		Server utilization and dependencies mappings
+		Track with AWS Migration Hub
+	AWS Database Migration Service (DMS)
+		Replicate On-premise to AWS, AWS to AWS, AWS to on-premise
+		Works with various database technologies (Oracle, MySQL, DynamoDB, etc...)
+	AWS Server Migration Service (SMS)
+		Incremental replication of on-premise live servers to AWS
+	
+AWS Data Sync
+	Move large amount of data from on-premiase to AWS
+	Can syncronize to: Amazon S3 (all storage classes), Amazon EFS, Amazon FSx for Windows
+	Move data from your NAS or file system via NFS or SMB
+	Replication tasks can be scheduled hourly, daily, weekly
+	Leverage the DataSync agent to connect to your systems
+	Can setup a bancdwidth limit
+
+Transferring Large Amount of Data into AWS 
+	Example: Transfer 200TB of data in the cloud. We have a 100Mbps internet connection
+		Over the internet/Site-to-site VPN --> 185 days
+		Over Direct Connect (DX) 1Gbps --> 18.5 days
+		Over Snowball --> 7 days
+		
+AWS Backup
+	Fully managed service
+	Centrally manage and automate backups across AWS Services
+	No need to create custom scripts and manuel processes
+	Supoorted services:
+		Amazon EC2 / Amazon EBS
+		Amazon S3
+		Amazon RDS / Amazon Aurora / Amazon DynamoDB
+		Amazon DocumentDB / Amazon Neptune
+		Amazon EFS / Amazon FSx (Lustre & Windows File Server)
+		AWS Storage Gateway (Volume Gateway)
+	Supports cross-region backups
+	Supports cross-account backups
+	On-demand and Scheduled backups
+	Tag-based backup policies
+	You create backup policies known as Backup Plans
+		Backup frequency
+		Backup window
+		Transition to Cold Storage (Never, Days, Weeks, Months, Years)
+		Retention Period (Always, Days, Weeks, Months, Years)
+		
+AWS Backup Vault Lock
+	Enforce a WORM (Write Once Read Many) state for all the backups that you store in your AWS Backup Vault
+	Even the root user cannot delete backups when enabled
+	
