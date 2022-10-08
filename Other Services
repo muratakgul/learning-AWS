@@ -1,0 +1,100 @@
+
+Other Services
+
+CICD:
+Continuous Integration
+	Developerspush the code to a code repository often (Github/CodeCommit/Bitbucket/etc...)
+	A testing / build server checks the code as soon as it is pushed (CodeBuild/Jenkins CI/etc...)
+	The developer gets feedback about the tests and checks that have passed/failed
+	Find bugs early, fix bugs
+	Helps to deliver faster asthe code is tested
+Continuous Delivery
+	Ensure that the software can be released reliably whenever needed
+	Ensures deployments happen often and are quick
+	Shift away from "one release every 3 months" to "5 releases a day"
+	That usually means automated deployment
+	Tools: CodeDeploy, Jenkins CD, Spinnaker, etc...
+
+AWS CodePipeline: Orchestrate	
+	Code: AWS CodeCommit --> like Github
+	Build and Test: AWS CodeBuild --> Jenkins CI
+	Deploy and Provision: AWS Elastic Beanstalk - AWS CodeDeploy - CloudFormation
+
+CloudFormation
+	Infrastructure as Code
+	CloudFormation is a declarative way of outlining your AWS Infrastructure, for any resources (most of them are supported)
+	Cloudformation creates AWS services for you, in the right order, with the exact configuration that you specify
+	Templates have to be uploaded in S3 and then referenced in CloudFormation
+	
+AWS Step Functions
+	Build serverless visual workflow to orchestrate your Lambda functions
+	Represent flow as a JSON state machine
+	Maximum execution time of 1 year
+	Use Cases: Order fulfillment, Data Processing, Web Applications, Any Workflow
+	
+AWS SWF (Simple Workflow Service)
+	Coordinates work amongst applications
+	Code runs on EC2 (not serverless)
+	1 year max run time
+	Example: order fulfilment from web to warehouse to delivery
+	Step Functions is recommended to be used for new applications, except:
+		If you need external signals to intervene in the processes
+		If you need child processes that return values to parent processes
+
+Amazon EMR (Elastic MapReduce)
+	It helps creating Hadoop clusters (Big Data) to analyze and proess vast amount of data
+	The clusters canbe made of hundreds of EC2 instances
+	Also suports Apache Spark, HBase, Presto, Flink
+	EMR takes care of all the provisioning and configurationAuto-scaling and integrated with Spot instances
+	Uses cases: data processing, ML, web indexing, big data
+	
+AWS Opsworks
+	Chef & Puppet helps you perform server configuration automatically, or repetitive actions
+	They work great with EC2 & On Premise VM
+	AWS OpsWorks = Managed Chef&Puppet
+	It is an alternative to AWS SSM
+	Chef&Puppet are open-source tools that work cross-cloud
+	
+AWS WorkSpaces
+	Managed, Secure Cloud Desktop
+	Great to eliminate management of on-premise VDI
+	On Demand, pay per by usage
+	Secure, Encrypted, Network Isolation
+	Integrated with MS AD
+	Virtual desktops OS types: Linux / Windows
+	
+AWS AppSync
+	Store and sync data across mobile and web apps in real-time
+	Makes use of GrapQL (mobile technology from Facebook)
+	Integrations with DynamoDB/Lambda
+	Real-time subscriptions
+	Offilne data synchronization (replaces Cognito Sync)
+	Fine Grained Security
+	
+Cost Explorer
+	Visualize, understand, and manage your AWS costs and usage over time
+	Create custom repots that analyze cost and usage data
+	Analyze your data at a high level: total costs and usage across all accounts
+	Or monthly, hourly, resource level granularity
+	Choose an optimal Savings Plan (to lower prices on your bill)
+	Forecast usage up to 12 months based on previous usage
+	
+Here's a quick cheat-sheet to remember all these services:
+	CodeCommit:service where you can store your code. Similar service is GitHub
+	CodeBuild: build and testing service in your CICDpipelines
+	CodeDeploy:deploy the packaged code onto EC2 and AWSLambda
+	CodePipeline:orchestrate the actions of your CICDpipelines (build stages, manual approvals, many deploys, etc)
+	CloudFormation: Infrastructure as Code for AWS. Declarative way to manage, create and update resources.
+	ECS (Elastic Container Service):Docker container management system on AWS. Helps with creating micro-services.
+	ECR (Elastic Container Registry):Docker images repository on AWS. Docker Images can be pushed and pulled from there
+	Step Functions:Orchestrate / Coordinate Lambda functions and ECScontainers into a workflow
+	SWF (Simple Workflow Service):Old way of orchestrating a big workflow.
+	EMR (Elastic Map Reduce):Big Data /Hadoop /Spark clusters on AWS, deployed on EC2 for you
+	Glue:ETL(ExtractTransform Load) service on AWS
+	OpsWorks:managed Chef & Puppet on AWS
+	ElasticTranscoder:managed media (video, music) converter service into various optimized formats
+	Organizations: hierarchy and centralized management of multiple AWSaccounts
+	Workspaces: Virtual Desktop on Demand in the Cloud. Replaces traditional on-premise VDIinfrastructure
+	AppSync:GraphQL as a service on AWS
+	SSO(SingleSign On): One login managed by AWSto log in to various business SAML 2.0-compatible applications (office 365 etc)
+  
